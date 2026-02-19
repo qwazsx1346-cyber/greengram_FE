@@ -68,7 +68,7 @@ watch(() => route.fullPath, () => {
 </script>
 
 <template>
-<header class="container py-3">
+<header class="container py-3" v-if="authenticationStore.state.isSigned">
     <div id="globalConst">
         <div class="d-flex flex-column flex-md-row align-items-center">
             <div class="d-inline-flex flex-grow-1 flex-shrink-0">
