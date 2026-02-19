@@ -19,8 +19,8 @@ const pic = computed( () => props.pic
                             ?   props.userId === authenticationStore.state.signedUser.userId 
                                 ?   props.pic.startsWith('http') 
                                     ? props.pic
-                                    : `${baseUrl.value}/pic/user/${props.userId}/${authenticationStore.state.signedUser.pic}` 
-                                : `${baseUrl.value}/pic/user/${props.userId}/${props.pic}` 
+                                    : `/pic/user/${props.userId}/${authenticationStore.state.signedUser.pic}` 
+                                : `/pic/user/${props.userId}/${props.pic}` 
                             : defaultProfileImg );
 
 
