@@ -4,6 +4,7 @@ import ProfileImg from './ProfileImg.vue';
 import { useAuthenticationStore } from '@/stores/authentication';
 import { reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { signOut } from '@/services/userService';
 
 const route = useRoute;
 const authenticationStore = useAuthenticationStore();
