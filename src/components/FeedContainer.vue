@@ -43,17 +43,17 @@ const getData = async () => {
     }
     
     try{
-      const res = await getFeedList(params);
-      if(res.status === 200) {
-          feedStore.setPage(feedStore.page + 1);
-          const result = res.data.resultData;
-          if(result && result.length > 0) {
-              feedStore.addFeedList(result);                        
-          }
-          if(result.length < feedStore.rowPerPage) {
-              state.isFinish = true
-          }        
-      }
+        const res = await getFeedList(params);
+        if(res.status === 200) {
+            feedStore.setPage(feedStore.page + 1);
+            const result = res.data.resultData;
+            if(result && result.length > 0) {
+                feedStore.addFeedList(result);                        
+            }
+            if(result.length < feedStore.rowPerPage) {
+                state.isFinish = true
+            }        
+        }
     } catch(e) {
         console.log('e: ', e);
     } finally {
