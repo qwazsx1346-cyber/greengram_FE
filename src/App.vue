@@ -64,7 +64,7 @@ const saveFeed = async () => {
             ...params,
             feedId: result.feedId,
             pics: result.pics,
-            writerId: authenticationStore.state.signedUser.userId,
+            writerUserId: authenticationStore.state.signedUser.userId,
             writerNickName: authenticationStore.state.signedUser.nickName,
             writerPic: authenticationStore.state.signedUser.pic,
             createdAt: getCurrentTimestamp(),
@@ -105,32 +105,32 @@ const getCurrentTimestamp = () => {
 </script>
 
 <template>
-  <header-component />
-  <router-view />
+    <header-component />
+    <router-view />
 
-  <b-modal v-model="messageModalStore.state.isShow" ok-only>{{ messageModalStore.state.message }}</b-modal>
-    <div class="modal fade" id="newFeedModal" tabIndex="-1" aria-labelledby="newFeedModalLabel" aria-hidden="false">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content" id="newFeedModalContent">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newFeedModalLabel">새 게시물 만들기</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="modalCloseButton"></button>
-                </div>
-                <div class="modal-body" id="id-modal-body">                            
-                    <div class="mt-3">location: <input type="text" name="location" placeholder="위치" v-model="state.feed.location"/></div>
-                    <div class="mt-3">contents: <textarea name="contents" placeholder="내용" v-model="state.feed.contents"></textarea></div>
-                    <div class="mt-3"><label>pic: <input name="pics" type="file" multiple accept="image/*" @change="handlePicChanged" /></label></div>                    
-                    <div class="d-flex flex-wrap gap-3 mt-3">
-                        <div class="preview-container" v-for="(item, idx) in state.previewPics" :key="idx">
-                            <img class="preview-img" :src="item"></img>                            
-                            <font-awesome-icon icon="fa fa-trash" class="pointer preview-img-delete" @click="deletePreviewPic(idx)" />
-                        </div>
+    <b-modal v-model="messageModalStore.state.isShow" ok-only>{{ messageModalStore.state.message }}</b-modal>
+        <div class="modal fade" id="newFeedModal" tabIndex="-1" aria-labelledby="newFeedModalLabel" aria-hidden="false">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content" id="newFeedModalContent">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newFeedModalLabel">새 게시물 만들기</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="modalCloseButton"></button>
                     </div>
-                    <div class="mt-3"><button @click="saveFeed">전송</button></div>
+                    <div class="modal-body" id="id-modal-body">                            
+                        <div class="mt-3">location: <input type="text" name="location" placeholder="위치" v-model="state.feed.location"/></div>
+                        <div class="mt-3">contents: <textarea name="contents" placeholder="내용" v-model="state.feed.contents"></textarea></div>
+                        <div class="mt-3"><label>pic: <input name="pics" type="file" multiple accept="image/*" @change="handlePicChanged" /></label></div>                    
+                        <div class="d-flex flex-wrap gap-3 mt-3">
+                            <div class="preview-container" v-for="(item, idx) in state.previewPics" :key="idx">
+                                <img class="preview-img" :src="item"></img>                            
+                                <font-awesome-icon icon="fa fa-trash" class="pointer preview-img-delete" @click="deletePreviewPic(idx)" />
+                            </div>
+                        </div>
+                        <div class="mt-3"><button @click="saveFeed">전송</button></div>
+                    </div>
                 </div>
-            </div>
-        </div>                
-    </div>
+            </div>                
+        </div>
 
 
 </template>

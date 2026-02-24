@@ -41,7 +41,7 @@ const onPostComment = async () => {
 
   const res = await postComment(data);
   if (res.status === 200) {
-    const result = res.data.result;
+    const result = res.data.resultData;
 
     const commentItem = {
       feedCommentId: result,
@@ -73,7 +73,7 @@ const getMoreComment = async () => {
   };
   const res = await getCommentList(params);
   if (res.status === 200) {
-    const result = res.data.result;
+    const result = res.data.resultData;
     state.moreComment = result.moreComment;
     if (result.commentList.length > 0) {
       state.commentList.push(...result.commentList);
