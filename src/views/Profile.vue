@@ -114,9 +114,7 @@ const onClickFollow = async () => {
     switch (state.userProfile.followState) {
         case 0:
         case 2: //post
-        const postRes = await postUserFollow({
-            toUserId: state.userProfile.userId,
-        });
+        const postRes = await postUserFollow({ toUserId: state.userProfile.userId });
         if (postRes.status === 200) {
             state.userProfile.followState += 1;
             state.userProfile.followerCount += 1;
