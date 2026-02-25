@@ -28,7 +28,7 @@ const props = defineProps({
     contents: String,
     isLike: Boolean,
     likeCount: Number,
-    comment: Object,
+    commentCount: Number,
   },
   ynDel: Boolean,
   onDeleteFeed: Function,
@@ -107,8 +107,15 @@ const toggleLike = async () => {
       </swiper-slide>
     </swiper>
     <div class="favCont p-2 d-flex flex-row">
-      <font-awesome-icon :icon="`${state.isLike ? 'fas' : 'far'} fa-heart`" class="pointer rem1_2 me-3 color-red" @click="toggleLike"/>
-      <span>{{ state.likeCount }}</span>
+      <div style="margin-right: 20px;">
+        <font-awesome-icon :icon="`${state.isLike ? 'fas' : 'far'} fa-heart`" class="pointer rem1_2 me-3 color-red" @click="toggleLike"/>
+        <span>{{ state.likeCount }}</span>
+      </div>
+
+      <div>
+        <font-awesome-icon icon="fa-regular fa-comment" />
+        <span>{{ props.item.commentCount }}</span>
+      </div>
     </div>
     <div class="itemCtnt p-2" v-if="props.item.contents">
       {{ props.item.contents }}
