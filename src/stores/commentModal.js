@@ -81,7 +81,16 @@ export const useCommentModalStore = defineStore(
         };
 
         const doDeleteComment = async (feedCommentId, idx) => {
-
+            if(!confirm('삭제하시겠습니까?')) {return};
+            const params = {
+                feed_comment_id: feedCommentId
+            }
+            const res = await deleteComment( params );
+            if(res.status === 200) {
+                state.commentList.splice(idx, 1); 
+                //기존에 있는 배열에서 특정한 인덱스에 있는 친구 1개부터(하나만 삭제하겠다라는 뜻)라는 뜻.
+                //2적으면 2개가 삭제됨. 실제로 데이터베이스 삭제는 아니고 화면에 보이는애들만 삭제
+            }
         }
 
         return { state, close, setFeedId, doPostComment, doGetCommentList, doDeleteComment }
