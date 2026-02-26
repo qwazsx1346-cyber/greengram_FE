@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { ref, reactive } from 'vue';
 import { getDateTimeInfo } from '@/utils/feedUtils';
 import { toggleFeedLike } from '@/services/feedLikeService';
+import { useCommentModalStore } from '@/stores/commentModal';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -14,6 +15,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 const baseUrl = ref(import.meta.env.VITE_BASE_URL);
+const commentModalStore = useCommentModalStore();
 
 const authenticationStore = useAuthenticationStore();
 
@@ -38,7 +40,7 @@ const state = reactive({
   modules: [Navigation, Pagination, Scrollbar, A11y],
   isLike: props.item.isLike,
   pagination: props.item.pics.length <= 5 ? { clickable: true } : null,
-  likeCount: props.item.likeCount,
+  likeCount: props.item.likeCount
 });
 
 const toggleLike = async () => {
@@ -49,6 +51,10 @@ const toggleLike = async () => {
     state.likeCount = state.isLike ? state.likeCount + 1 : state.likeCount - 1;
   }
 };
+
+const showCommentModel = () => {
+  commentModalStore.setFeedId(props.item.feedId);
+}
 </script>
 
 <template>
@@ -77,14 +83,14 @@ const toggleLike = async () => {
           </router-link>
         </div>
         <div>{{ props.item.location }}</div>
-      </div>
+      </div>            
       <div
         v-if="
           props.ynDel &&
           props.item.writerUserId === authenticationStore.state.signedUser.userId
         ">
-        <div className="d-flex flex-column justify-content-center">
-        <font-awesome-icon icon="fa fa-trash" className="pointer color-red" @click="$emit('onDeleteFeed')"/>
+        <div class="d-flex flex-column justify-content-center">
+          <font-awesome-icon icon="fa fa-trash" class="pointer color-red" @click="$emit('onDeleteFeed')" />
         </div>
       </div>
     </div>
@@ -108,12 +114,13 @@ const toggleLike = async () => {
     </swiper>
     <div class="favCont p-2 d-flex flex-row">
       <div style="margin-right: 20px;">
-        <font-awesome-icon :icon="`${state.isLike ? 'fas' : 'far'} fa-heart`" class="pointer rem1_2 me-3 color-red" @click="toggleLike"/>
+        <font-awesome-icon :icon="`${state.isLike ? 'fas' : 'far'} fa-heart`" 
+        class="pointer rem1_2 me-3 color-red" @click="toggleLike" />
         <span>{{ state.likeCount }}</span>
       </div>
 
       <div>
-        <font-awesome-icon icon="fa-regular fa-comment" />
+        <font-awesome-icon icon="fa-regular fa-comment" class="pointer rem1_2 me-3" @click="showCommentModel"/>
         <span>{{ props.item.commentCount }}</span>
       </div>
     </div>
