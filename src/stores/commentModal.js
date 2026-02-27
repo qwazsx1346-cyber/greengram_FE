@@ -2,6 +2,7 @@ import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 import { postComment, getCommentList, deleteComment } from '@/services/feedCommentService';
 import { useAuthenticationStore } from '@/stores/authentication';
+import { useFeedStore } from '@/stores/feed'; //댓글 숫자올리기용
 
 export const useCommentModalStore = defineStore(
     "commentModal",
@@ -61,6 +62,9 @@ export const useCommentModalStore = defineStore(
 
                 state.commentList.unshift(commentItem);
                 state.comment = '';
+
+                const feedStore = useFeedStore();
+                feedStore.commentCountUp(state.feedId);
             }
         }
 
@@ -80,7 +84,7 @@ export const useCommentModalStore = defineStore(
             state.isLoading = false;
         };
 
-        const doDeleteComment = async (feedCommentId, idx) => {
+        const doDeleteComment = async (feedCommentId, idx, feedId) => {
             if(!confirm('삭제하시겠습니까?')) {return};
             const params = {
                 feed_comment_id: feedCommentId
@@ -90,6 +94,9 @@ export const useCommentModalStore = defineStore(
                 state.commentList.splice(idx, 1); 
                 //기존에 있는 배열에서 특정한 인덱스에 있는 친구 1개부터(하나만 삭제하겠다라는 뜻)라는 뜻.
                 //2적으면 2개가 삭제됨. 실제로 데이터베이스 삭제는 아니고 화면에 보이는애들만 삭제
+
+                const feedStore = useFeedStore();
+                feedStore.commentCountDown(feedId);
             }
         }
 
