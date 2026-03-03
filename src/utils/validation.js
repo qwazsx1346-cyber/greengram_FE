@@ -7,6 +7,10 @@ export const checkValidation = () => {
 
     //reduce는 하나로 만들 때 사용
     //여러개의 유효성에 걸리는 message 문자열들을 하나의 문자열로 만드는 작업
+    //prev: 직전에 return값이 넘어온다.
+    //item: 현재 item
+
+    //result에는 마지막으로 return한 값이 넘어오게 된다.
     const result = Array.from(validList).reduce((prev, item) => {
       let message = ''
       const value = item.value.trim();
@@ -18,7 +22,7 @@ export const checkValidation = () => {
         const regexpObj = new RegExp(regexp);
 
         if(!value.match(regexpObj)) {
-          message += item.getAttribute('regexp-message') + '\n';
+          message = item.getAttribute('regexp-message') + '\n';
         }   
       }
       return prev + message;

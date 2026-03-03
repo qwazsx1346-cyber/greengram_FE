@@ -1,8 +1,8 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive } from 'vue'; //반응형 상태(화면에 변화)
 import { useRouter } from 'vue-router';
 import { signIn } from '@/services/userService';
-import { useAuthenticationStore } from '@/stores/authentication';
+import { useAuthenticationStore } from '@/stores/authentication'; //pinia 상태관리
 import { checkValidation } from '@/utils/validation';
 
 const router = useRouter();
@@ -11,7 +11,7 @@ const authentication = useAuthenticationStore();
 
 const state = reactive({
     form: {
-        uid: 'mic2',
+        uid: 'mic7',
         upw: 'aaaa1212!!',
     },
 });
@@ -73,7 +73,5 @@ const submit = async () => {
 </template>
 
 <style scoped>
-.container {
-    max-width: 576px;
-}
+.container { max-width: 576px; }
 </style>

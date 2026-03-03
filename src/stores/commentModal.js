@@ -31,7 +31,6 @@ export const useCommentModalStore = defineStore(
             close();
             state.showModal = true;
             state.feedId = feedId;
-            doGetCommentList();
         }
 
         const doPostComment = async () => {
@@ -69,7 +68,7 @@ export const useCommentModalStore = defineStore(
         }
 
         const doGetCommentList = async () => { 
-            if(state.isFinish) { return; }
+            if(state.isLoading || state.isFinish || state.feedId === 0) { return; }
             state.isLoading = true;
             const params = {
                 feed_id: state.feedId

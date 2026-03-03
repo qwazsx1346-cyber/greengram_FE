@@ -6,18 +6,17 @@ import { useMessageModalStore } from '@/stores/messageModal';
 axios.defaults.baseURL = `/api/`;
 axios.defaults.withCredentials = true;
 
+//인터셉터
 axios.interceptors.response.use(
-  (res) => {
-    return res;
-  },
-  async (err) => {
+  res => res,
+  async err => {
     console.log('err: ', err);
     if (err.response) {
       console.log('err.response : ', err.response);
       const authenticationStore = useAuthenticationStore();
-      if (err.config.url === '/user/reissue' && err.response.status === 500) {
-        authenticationStore.signOut();
-      } else if (err.response.status === 401 && authenticationStore.state.isSigned) {
+      if (err.config.url === '/user/reissue' && err.response.status === 500) { //AT 재발급 시도했으나 에러 터졌음. -> RT 만료
+        authenticationStore.signOut(); //로그아웃 처리
+      } else if (err.response.status === 401 && authenticationStore.state.isSigned) { //로그인 상태인데 401상태로 응답을 받으면 -> AT만료
         //401 UnAuthorized 에러인데 FE 로그인 처리 되어 있다면
 
         await reissue(); //AccessToken 재발행 시도
@@ -26,7 +25,7 @@ axios.interceptors.response.use(
         return await axios.request(err.config);
       } else {
         const message = err.response.data?.message
-          ? err.response.data?.message
+          ? err.response.data?.resultMessage
           : err.response.data;
 
         const messageModalStore = useMessageModalStore();
