@@ -4,6 +4,8 @@ import SignUp from '@/views/SignUp.vue';
 import SignIn from '@/views/SignIn.vue';
 import Profile from '@/views/Profile.vue';
 import { useAuthenticationStore } from '@/stores/authentication';
+import { useCommentModalStore } from '@/stores/commentModal';
+
 /*
 <3가지 경우>
 무조건 접근 가능한 path
@@ -40,9 +42,15 @@ const router = createRouter({
   ],
 });
 
+//네비게이션 가드
 router.beforeEach( (to, from, next) => {
   const authentication = useAuthenticationStore();
+  const commentModalStore = useCommentModalStore();
   const isSigned = authentication.state.isSigned; //true: 로그인 상태, false: 비로그인 상태
+
+  if( commentModalStore.state.showModal ) { //댓글 모달창이 켜져 있다면
+    commentModalStore.close(); //닫는다.
+  }
   
   //비로그인 상태에서 로그인이 필요한 path로 가려고 할 때 
   if( to.meta.requiresAuth && !isSigned ) {

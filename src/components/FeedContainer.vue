@@ -1,9 +1,8 @@
 <script setup>
 import loadingImg from '@/assets/loading.gif';
 import FeedCard from '@/components/FeedCard.vue';
-import { reactive, onMounted, onUnmounted, watch } from 'vue';
+import { reactive, watch } from 'vue';
 import { useFeedStore } from '@/stores/feed';
-import { bindEvent, throttle } from '@/utils/commonUtils';
 import { getFeedList, deleteFeed } from '@/services/feedService';
 import { useInfiniteScroll } from '@/composables/useInfiniteScroll';
 
