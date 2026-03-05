@@ -5,7 +5,7 @@ import { useAuthenticationStore } from '@/stores/authentication';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { ref, reactive } from 'vue';
-import { getDateTimeInfo } from '@/utils/feedUtils';
+import { getDateTimeInfo } from '@/utils/commonUtils';
 import { toggleFeedLike } from '@/services/feedLikeService';
 import { useCommentModalStore } from '@/stores/commentModal';
 

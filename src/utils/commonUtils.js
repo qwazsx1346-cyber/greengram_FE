@@ -35,3 +35,41 @@ export const bindEvent = (state, window, fn) => {
         fn();
     } 
 }
+
+export const getCurrentTimestamp = () => {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    const day = ('0' + today.getDate()).slice(-2);
+
+    const hours = ('0' + today.getHours()).slice(-2); 
+    const minutes = ('0' + today.getMinutes()).slice(-2);
+    const seconds = ('0' + today.getSeconds()).slice(-2); 
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+export const getDateTimeInfo = dt => {
+    // if(!dt) return '방금 전';
+
+    const nowDt = new Date();
+    const targetDt = new Date(dt);
+
+    const nowDtSec = parseInt(nowDt.getTime() / 1000);
+    const targetDtSec = parseInt(targetDt.getTime() / 1000);
+
+    const diffSec = nowDtSec - targetDtSec;
+    if(diffSec < 60) {
+        return '방금 전';
+    } else if( 60 <= diffSec < 120 ) {
+        return '1분 전';
+    } else if(diffSec < 3600) { //분 단위 (60 * 60)
+        return `${parseInt(diffSec / 60)}분 전`;
+    } else if(diffSec < 86400) { //시간 단위 (60 * 60 * 24)
+        return `${parseInt(diffSec / 3600)}시간 전`;
+    } else if(diffSec < 2592000) { //일 단위 (60 * 60 * 24 * 30)
+        return `${parseInt(diffSec / 86400)}일 전`;
+    }
+    return targetDt.toLocaleString();
+}

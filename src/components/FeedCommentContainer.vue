@@ -11,7 +11,7 @@ import { useAuthenticationStore } from '@/stores/authentication';
 
 const props = defineProps({
   feedId: String,
-  comments: Object,
+  comments: Object
 });
 
 const authenticationStore = useAuthenticationStore();
@@ -36,7 +36,7 @@ const onPostComment = async () => {
 
   const data = {
     feedId: props.feedId,
-    comment: state.comment,
+    comment: state.comment
   };
 
   const res = await postComment(data);
@@ -49,7 +49,7 @@ const onPostComment = async () => {
       writerNickName: authenticationStore.state.signedUser.nickName,
       writerPic: authenticationStore.state.signedUser.pic,
       comment: state.comment,
-      isSelf: true,
+      isSelf: true
     };
 
     state.commentList.push(commentItem);

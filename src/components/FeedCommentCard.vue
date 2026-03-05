@@ -1,17 +1,21 @@
 <script setup>
 import ProfileImg from './ProfileImg.vue';
 import { useAuthenticationStore } from '@/stores/authentication';
+import { useCommentModalStore } from '@/stores/commentModal';
+import { getDateTimeInfo } from '@/utils/commonUtils';
+
 
 const authenticationStore = useAuthenticationStore();
+const commentModalStore = useCommentModalStore();
 
 const props = defineProps({
   item: Object,
 });
 
-const emit = defineEmits(['onDeleteComment']);
-const deleteComment = () => {
-  emit('onDeleteComment');
-};
+// const emit = defineEmits(['onDeleteComment']);
+// const deleteComment = () => {
+//   emit('onDeleteComment');
+// };
 </script>
 
 <template>
@@ -37,8 +41,10 @@ const deleteComment = () => {
           </div>
         </div>
       </router-link>
+      <div class="ms-2">{{ getDateTimeInfo(props.item.createdAt) }}</div>
       <div v-if="authenticationStore.state.signedUser.userId === props.item.writerUserId" class="ms-3">
-          <font-awesome-icon icon="fa fa-trash" class="pointer" @click="$emit('onDeleteComment')" />        
+          <font-awesome-icon icon="fa fa-trash" class="pointer" 
+          @click="commentModalStore.doDeleteComment(props.item)" />        
       </div>
     </div>
     <div>{{ props.item.comment }}</div>

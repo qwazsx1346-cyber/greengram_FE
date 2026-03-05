@@ -67,6 +67,8 @@ const buy = async () => {
 }
 //메인 화면으로 이동
 const moveToMain = e => {
+    // 현재 주소가 '/'이면 아무 작업도 안한다.
+    if(route.path === '/') { return; }
     // feedStore.profileUserId 값을 삭제해주어야 메인화면에서 모든 사용자의 피드 리스트가 뜬다.
     feedStore.init();
     router.push('/');
